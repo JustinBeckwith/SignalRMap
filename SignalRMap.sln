@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRMap", "SignalRMap\SignalRMap.csproj", "{B2AE6862-2BCA-435F-A3E7-0741469B69A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRMap.Tests", "SignalRMap.Tests\SignalRMap.Tests.csproj", "{8C97A061-43D3-4F36-A698-1814A61F842C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2AE6862-2BCA-435F-A3E7-0741469B69A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2AE6862-2BCA-435F-A3E7-0741469B69A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2AE6862-2BCA-435F-A3E7-0741469B69A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2AE6862-2BCA-435F-A3E7-0741469B69A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C97A061-43D3-4F36-A698-1814A61F842C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C97A061-43D3-4F36-A698-1814A61F842C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C97A061-43D3-4F36-A698-1814A61F842C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C97A061-43D3-4F36-A698-1814A61F842C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

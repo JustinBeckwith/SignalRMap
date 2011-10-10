@@ -1,0 +1,9 @@
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalRMap.Tests.dll.config
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalRMap.Tests.dll
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalRMap.Tests.pdb
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalRMap.dll
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalRMap.pdb
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\obj\Debug\SignalRMap.Tests.dll
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\obj\Debug\SignalRMap.Tests.pdb
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap.Tests\bin\Debug\SignalR.dll

@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+</p>
+
+
+<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.signalR.min.js")" type="text/javascript"></script>
+
+
+<div id='mapDiv' style="position:absolute; width: 400px; height: 400px;"></div>
+
+<input type="text" id="msg" />
+<input type="button" id="broadcast" value="do it!"/>
+
+<ul id="messages">
+</ul>
+
+
+<script type="text/javascript">
+
+	$(function () {
+
+		var connection = $.connection('echo');
+
+		connection.received(function (data) {
+			$('#messages').append('<li>' + data + '</li>');
+		});
+
+		connection.start();
+
+		$("#broadcast").click(function () {
+			connection.send($('#msg').val());
+		});
+
+		navigator.geolocation.getCurrentPosition(function (position) {
+			//mappit(position);
+		});
+	});
+
+
+
+
+	
+
+
+	function mappit(position) {
+		var mapOptions = {
+			credentials: "AnONREX2RmJq2kD0D_M7CWB1zPPkNBRj2ocFkXq1HCEIU7nku7zKiTwCfzMtQOnb",
+			center: new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude),
+			zoom: 14
+		}
+
+		var map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
+		//map.entities.clear();
+		var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { text: 'user 1' });
+		map.entities.push(pushpin);
+	}
+
+	
+	
+</script>
+
