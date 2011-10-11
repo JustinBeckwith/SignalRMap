@@ -1,0 +1,1 @@
+This is an example of using SignalR and Bing maps to plot the current visitors of a page on a map.  It was done entirely for fun, and probably has no practical uses.  The interesting parts are in MapHub.cs and Views/Home/Index.cshtml.  For more information, visit http://jbeckwith.com.
