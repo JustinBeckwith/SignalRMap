@@ -1,9 +1,9 @@
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\SignalRMap.dll
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\SignalRMap.pdb
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\EntityFramework.dll
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\SignalR.dll
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\EntityFramework.xml
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\obj\Debug\SignalRMap.dll
 C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\obj\Debug\SignalRMap.pdb
-C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\justbe\Mesh\Code\SignalRMap\SignalRMap\bin\SignalR.dll

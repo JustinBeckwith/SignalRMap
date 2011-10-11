@@ -16,7 +16,7 @@ namespace SignalRMap
 
 		public void Join(MapClient message)
 		{
-			_clients.Add(this.Context.ClientId, message);
+			_clients.Add(this.Context.ClientId, message);			
 			Clients.addClient(message);
 			this.Caller.addClients(_clients.ToArray());
 		}

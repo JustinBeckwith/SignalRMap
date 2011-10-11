@@ -22,7 +22,12 @@
 
 
 		chat.addClient = function (client) {
-			addClient(client);
+			var pins = getPushPins();
+			
+			// ignore this if it's the first call
+			if (pins.length == 0)
+				addClient(client);
+
 			centerMap();
 		};
 
@@ -51,7 +56,7 @@
 		$.connection.hub.start(function () {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				mappit(position);
-				var rndPosition = createRandomPosition();
+				var rndPosition = createRandomPosition(position);
 				var message = { 'user': 'user 1', 'location': { latitude: rndPosition.latitude, longitude: rndPosition.longitude} };
 				chat.join(message);
 			});
@@ -60,7 +65,9 @@
 
 	});
 
-
+	/**
+	 * addClient
+	 **/
 	function addClient(client) {
 		console.log(client);
 		var location = new Microsoft.Maps.Location(client.location.latitude, client.location.longitude);
@@ -71,11 +78,13 @@
 			center: new Microsoft.Maps.Location(client.location.latitude, client.location.longitude),
 			zoom: 1
 		});
-	}
+	} // end addClient function
 
 	
 
-
+	/**
+	 * mappit
+	 **/
 	function mappit(position) {
 		
 		var mapOptions = {
@@ -83,31 +92,54 @@
 			center: new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude)//,
 			//zoom: 14
 		}
-
 		map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);				
-	}
+	} // end mappit function
 
 
-	function createRandomPosition() {
-		var latitude = ((Math.random() * 180)) - 90;
-		var longitude = ((Math.random() * 360)) - 180;
+	/**
+	 * createRandomPosition
+	 **/
+	function createRandomPosition(position) {
+		var latitude = position.coords.latitude + ((Math.random() * 5)) - 2.5;
+		var longitude = position.coords.longitude + ((Math.random() * 5)) - 2.5;
 		return { latitude: latitude, longitude: longitude };
-	}
+	} // end createRandomPosition function
 
+	/**
+	 * centerMap
+	 **/
 	function centerMap() {
 
-		var locations = [];
+		var pins = getPushPins();
+
+		var locations = [];		
+		for (var i = pins.length-1; i>=0; i--) 
+			locations.push(pins[i].getLocation());
+
+		if (locations.length == 1) {
+			map.setView({
+				zoom: 15
+			});
+		} else {
+			map.setView({
+				bounds: Microsoft.Maps.LocationRect.fromLocations(locations)
+			});
+		} // end else
+	} // end centerMap function
+
+	/**
+	 * getPushPins
+	 **/
+	function getPushPins() {
+		var pins = [];
 		for (var i = map.entities.getLength() - 1; i >= 0; i--) {
 			var pushpin = map.entities.get(i);
 			if (pushpin instanceof Microsoft.Maps.Pushpin) {
-				locations.push(pushpin.getLocation());		
+				pins.push(pushpin);		
 			} // end if
 		} // end for
-		
-		map.setView({
-			bounds: Microsoft.Maps.LocationRect.fromLocations(locations)
-		});
-	}
+		return pins;
+	} // end getPushPins function
 	
 	
 </script>
