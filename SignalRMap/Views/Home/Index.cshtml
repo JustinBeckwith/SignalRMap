@@ -1,67 +1,113 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "SignalR Map";
 }
-
-<h2>@ViewBag.Message</h2>
-<p>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-</p>
-
 
 <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 <script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.signalR.min.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
 
-
-<!--<div id='mapDiv' style="position:absolute; width: 400px; height: 400px;"></div>-->
-
-<input type="text" id="msg" />
-<input type="button" id="broadcast" value="do it!"/>
-
-<ul id="messages">
-</ul>
+<div id='mapDiv'></div>
 
 
 <script type="text/javascript">
 
+	var map = null;
+	var pushPins = [];
+
 	$(function () {
 
-		var connection = $.connection('echo');
 
-		connection.received(function (data) {
-			$('#messages').append('<li>' + data + '</li>');
+		var chat = $.connection.mapHub;
+
+
+		chat.addClient = function (client) {
+			addClient(client);
+			centerMap();
+		};
+
+
+		chat.addClients = function (clients) {
+			console.log('addClients: ' + clients.length);
+			for (var i = 0; i < clients.length; i++)
+				addClient(clients[i].Value);
+
+			centerMap();
+		} // end chat.addClients function
+
+
+		chat.removeClient = function (client) {
+			console.log('remove: ' + client);
+			for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+				var pushpin = map.entities.get(i);
+				if (pushpin instanceof Microsoft.Maps.Pushpin) {
+					if (pushpin.getLocation().latitude == client.latitude && pushpin.getLocation().longitude == client.longitude) {
+						map.entities.removeAt(i);
+					} // end if
+				} // end if
+			} // end for
+		} // end chat.removeClient
+
+		$.connection.hub.start(function () {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				mappit(position);
+				var rndPosition = createRandomPosition();
+				var message = { 'user': 'user 1', 'location': { latitude: rndPosition.latitude, longitude: rndPosition.longitude} };
+				chat.join(message);
+			});
 		});
 
-		connection.start();
 
-		$("#broadcast").click(function () {
-			connection.send($('#msg').val());
-		});
-
-		navigator.geolocation.getCurrentPosition(function (position) {
-			//mappit(position);
-		});
 	});
 
 
+	function addClient(client) {
+		console.log(client);
+		var location = new Microsoft.Maps.Location(client.location.latitude, client.location.longitude);
+		var pushpin = new Microsoft.Maps.Pushpin(location, { text: client.clientId });
+		map.entities.push(pushpin);
 
+		map.setView({
+			center: new Microsoft.Maps.Location(client.location.latitude, client.location.longitude),
+			zoom: 1
+		});
+	}
 
 	
 
 
 	function mappit(position) {
+		
 		var mapOptions = {
 			credentials: "AnONREX2RmJq2kD0D_M7CWB1zPPkNBRj2ocFkXq1HCEIU7nku7zKiTwCfzMtQOnb",
-			center: new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude),
-			zoom: 14
+			center: new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude)//,
+			//zoom: 14
 		}
 
-		var map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
-		//map.entities.clear();
-		var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { text: 'user 1' });
-		map.entities.push(pushpin);
+		map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);				
 	}
 
+
+	function createRandomPosition() {
+		var latitude = ((Math.random() * 180)) - 90;
+		var longitude = ((Math.random() * 360)) - 180;
+		return { latitude: latitude, longitude: longitude };
+	}
+
+	function centerMap() {
+
+		var locations = [];
+		for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+			var pushpin = map.entities.get(i);
+			if (pushpin instanceof Microsoft.Maps.Pushpin) {
+				locations.push(pushpin.getLocation());		
+			} // end if
+		} // end for
+		
+		map.setView({
+			bounds: Microsoft.Maps.LocationRect.fromLocations(locations)
+		});
+	}
 	
 	
 </script>

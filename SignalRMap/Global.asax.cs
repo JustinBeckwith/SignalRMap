@@ -21,9 +21,7 @@ namespace SignalRMap
 
 		public static void RegisterRoutes(RouteCollection routes)
 		{
-			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-			routes.MapConnection<MyConnection>("echo", "echo/{*operation}");
+			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");			
 
 			routes.MapRoute(
 				"Default", // Route name

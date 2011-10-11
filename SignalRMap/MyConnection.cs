@@ -16,5 +16,15 @@ namespace SignalRMap
 			// Broadcast data to all clients
 			return Connection.Broadcast(data);
 		}
+
+		protected override Task OnConnectedAsync(HttpContextBase context, string clientId)
+		{
+			return base.OnConnectedAsync(context, clientId);
+		}
+
+		protected override Task OnDisconnectAsync(string clientId)
+		{
+			return base.OnDisconnectAsync(clientId);
+		}
 	}
 }
