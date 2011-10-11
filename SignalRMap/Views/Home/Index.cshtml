@@ -25,7 +25,7 @@
 			var pins = getPushPins();
 			
 			// ignore this if it's the first call
-			if (pins.length == 0)
+			if (pins.length > 0)
 				addClient(client);
 
 			centerMap();
@@ -69,7 +69,7 @@
 	 * addClient
 	 **/
 	function addClient(client) {
-		console.log(client);
+		
 		var location = new Microsoft.Maps.Location(client.location.latitude, client.location.longitude);
 		var pushpin = new Microsoft.Maps.Pushpin(location, { text: client.clientId });
 		map.entities.push(pushpin);
