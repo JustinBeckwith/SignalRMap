@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "SignalR Map";
+}
+
+<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.signalR.min.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+
+<style type="text/css">
+
+	#legend 
+	{
+		background-color: #3C5A76; 		
+		border: 2px solid #CCCCCC; 
+		color: #EEEEEE; 
+		font-weight: bold;
+		position: absolute; 
+		right: 50px; 
+		top: 50px; 		
+		padding: 15px;
+	}
+
+</style>
+
+<div id='mapDiv'></div>
+
+
+<div id="legend">
+	<label for="userCount">users: </label>
+	<span id="userCount">0</span>
+
+</div>
+
+
+<script type="text/javascript">
+
+	var map = null;	
+	var isRandom = @((Request.QueryString["random"] == "true").ToString().ToLower());
+
+	/**
+	 *	on load
+	 **/
+	$(function () {		
+
+		// create the connection to our hub
+		var mapHub = $.connection.mapHub;
+
+		// define some javascript methods the server side hub can invoke
+
+		// add a new client to the map
+		mapHub.addClient = function (client) {
+			var pins = getPushPins();
+			// ignore this if it's the first call
+			if (pins.length > 0)
+				addClient(client);
+			centerMap();
+			$("#userCount").html(pins.length + 1)
+		};
+
+		// add many new clients to the map (used primarily on join)
+		mapHub.addClients = function (clients) {			
+			for (var i = 0; i < clients.length; i++)
+				addClient(clients[i].Value);
+			centerMap();
+			var pins = getPushPins();
+			$("#userCount").html(pins.length)
+		} // end mapHub.addClients function
+
+		// remove a client from the map
+		mapHub.removeClient = function (client) {			
+			for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+				var pushpin = map.entities.get(i);
+				if (pushpin instanceof Microsoft.Maps.Pushpin) {
+					if (pushpin.getLocation().latitude == client.latitude && pushpin.getLocation().longitude == client.longitude) {
+						map.entities.removeAt(i);
+					} // end if
+				} // end if
+			} // end for
+		} // end mapHub.removeClient
+
+		// start the hub
+		$.connection.hub.start(function () {
+			// after the hub has started, get the current location from the browser
+			navigator.geolocation.getCurrentPosition(function (position) {
+				// create the map element on the page
+				mappit(position);
+
+				// notify the server a new user has joined the party
+				var coords = isRandom ? createRandomPosition(position) : position.coords;
+				var message = { 'user': '', 'location': { latitude: coords.latitude, longitude: coords.longitude} };
+				mapHub.join(message);
+			});
+		});
+
+
+	});
+
+	/**
+	 * addClient
+	 **/
+	function addClient(client) {
+		
+		var location = new Microsoft.Maps.Location(client.location.latitude, client.location.longitude);
+		var pushpin = new Microsoft.Maps.Pushpin(location, { text: client.clientId });
+		map.entities.push(pushpin);
+
+		map.setView({
+			center: new Microsoft.Maps.Location(client.location.latitude, client.location.longitude),
+			zoom: 1
+		});
+	} // end addClient function
+
+	
+
+	/**
+	 * mappit
+	 **/
+	function mappit(position) {
+		
+		var mapOptions = {
+			credentials: "AnONREX2RmJq2kD0D_M7CWB1zPPkNBRj2ocFkXq1HCEIU7nku7zKiTwCfzMtQOnb",
+			center: new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude)
+		}
+		map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);				
+	} // end mappit function
+
+
+	/**
+	 * createRandomPosition
+	 **/
+	function createRandomPosition(position) {
+		var latitude = position.coords.latitude + ((Math.random() * 5)) - 2.5;
+		var longitude = position.coords.longitude + ((Math.random() * 5)) - 2.5;
+		return { latitude: latitude, longitude: longitude };
+	} // end createRandomPosition function
+
+	/**
+	 * centerMap
+	 **/
+	function centerMap() {
+
+		var pins = getPushPins();
+
+		var locations = [];		
+		for (var i = pins.length-1; i>=0; i--) 
+			locations.push(pins[i].getLocation());
+
+		if (locations.length == 1) {
+			map.setView({
+				zoom: 15
+			});
+		} else {
+			map.setView({
+				bounds: Microsoft.Maps.LocationRect.fromLocations(locations)
+			});
+		} // end else
+	} // end centerMap function
+
+	/**
+	 * getPushPins
+	 **/
+	function getPushPins() {
+		var pins = [];
+		for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+			var pushpin = map.entities.get(i);
+			if (pushpin instanceof Microsoft.Maps.Pushpin) {
+				pins.push(pushpin);		
+			} // end if
+		} // end for
+		return pins;
+	} // end getPushPins function
+	
+	
+</script>
+
