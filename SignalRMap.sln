@@ -11,6 +11,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRMap.Tests", "SignalRMap.Tests\SignalRMap.Tests.csproj", "{8C97A061-43D3-4F36-A698-1814A61F842C}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://42up.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SignalRMap.Tests\\SignalRMap.Tests.csproj
+		SccProjectName1 = SignalRMap.Tests
+		SccLocalPath1 = SignalRMap.Tests
+		SccProjectUniqueName2 = SignalRMap\\SignalRMap.csproj
+		SccProjectName2 = SignalRMap
+		SccLocalPath2 = SignalRMap
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

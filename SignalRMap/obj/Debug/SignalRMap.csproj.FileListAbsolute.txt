@@ -16,3 +16,12 @@ C:\Users\justbe\SkyDrive\Code\SignalRMap\SignalRMap\bin\EntityFramework.xml
 C:\Users\justbe\SkyDrive\Code\SignalRMap\SignalRMap\obj\Debug\SignalRMap.csprojResolveAssemblyReference.cache
 C:\Users\justbe\SkyDrive\Code\SignalRMap\SignalRMap\obj\Debug\SignalRMap.dll
 C:\Users\justbe\SkyDrive\Code\SignalRMap\SignalRMap\obj\Debug\SignalRMap.pdb
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\SignalRMap.dll
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\SignalRMap.pdb
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\EntityFramework.dll
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\SignalR.dll
+C:\Users\justbe\42up\SignalRMap\SignalRMap\bin\EntityFramework.xml
+C:\Users\justbe\42up\SignalRMap\SignalRMap\obj\Debug\SignalRMap.csprojResolveAssemblyReference.cache
+C:\Users\justbe\42up\SignalRMap\SignalRMap\obj\Debug\SignalRMap.dll
+C:\Users\justbe\42up\SignalRMap\SignalRMap\obj\Debug\SignalRMap.pdb
