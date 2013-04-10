@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-using SignalR.Routing;
-
 namespace SignalRMap
 {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
